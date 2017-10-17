@@ -1,0 +1,56 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26124.0
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{32DCD825-9142-494F-B884-F269413B3961}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NJpegTran", "src\NJpegTran\NJpegTran.csproj", "{9F810C95-90E4-493B-B950-B555D30BAA48}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{3E34E211-E0A7-45CC-A9B3-FCCF58E03231}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NJpegTran.Tests", "test\NJpegTran.Tests\NJpegTran.Tests.csproj", "{E97FF719-928E-4575-B194-86CD3756C820}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9F810C95-90E4-493B-B950-B555D30BAA48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F810C95-90E4-493B-B950-B555D30BAA48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F810C95-90E4-493B-B950-B555D30BAA48}.Debug|x64.ActiveCfg = Debug|x64
+		{9F810C95-90E4-493B-B950-B555D30BAA48}.Debug|x64.Build.0 = Debug|x64
+		{9F810C95-90E4-493B-B950-B555D30BAA48}.Debug|x86.ActiveCfg = Debug|x86
+		{9F810C95-90E4-493B-B950-B555D30BAA48}.Debug|x86.Build.0 = Debug|x86
+		{9F810C95-90E4-493B-B950-B555D30BAA48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F810C95-90E4-493B-B950-B555D30BAA48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F810C95-90E4-493B-B950-B555D30BAA48}.Release|x64.ActiveCfg = Release|x64
+		{9F810C95-90E4-493B-B950-B555D30BAA48}.Release|x64.Build.0 = Release|x64
+		{9F810C95-90E4-493B-B950-B555D30BAA48}.Release|x86.ActiveCfg = Release|x86
+		{9F810C95-90E4-493B-B950-B555D30BAA48}.Release|x86.Build.0 = Release|x86
+		{E97FF719-928E-4575-B194-86CD3756C820}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E97FF719-928E-4575-B194-86CD3756C820}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E97FF719-928E-4575-B194-86CD3756C820}.Debug|x64.ActiveCfg = Debug|x64
+		{E97FF719-928E-4575-B194-86CD3756C820}.Debug|x64.Build.0 = Debug|x64
+		{E97FF719-928E-4575-B194-86CD3756C820}.Debug|x86.ActiveCfg = Debug|x86
+		{E97FF719-928E-4575-B194-86CD3756C820}.Debug|x86.Build.0 = Debug|x86
+		{E97FF719-928E-4575-B194-86CD3756C820}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E97FF719-928E-4575-B194-86CD3756C820}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E97FF719-928E-4575-B194-86CD3756C820}.Release|x64.ActiveCfg = Release|x64
+		{E97FF719-928E-4575-B194-86CD3756C820}.Release|x64.Build.0 = Release|x64
+		{E97FF719-928E-4575-B194-86CD3756C820}.Release|x86.ActiveCfg = Release|x86
+		{E97FF719-928E-4575-B194-86CD3756C820}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9F810C95-90E4-493B-B950-B555D30BAA48} = {32DCD825-9142-494F-B884-F269413B3961}
+		{E97FF719-928E-4575-B194-86CD3756C820} = {3E34E211-E0A7-45CC-A9B3-FCCF58E03231}
+	EndGlobalSection
+EndGlobal
