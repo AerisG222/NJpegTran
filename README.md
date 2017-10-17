@@ -1,7 +1,7 @@
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AerisG222/NJpegTran/blob/master/LICENSE.md)
 [![NuGet](https://buildstats.info/nuget/NJpegTran)](https://www.nuget.org/packages/NJpegTran/)
 [![Travis](https://img.shields.io/travis/AerisG222/NJpegTran.svg)](https://travis-ci.org/AerisG222/NJpegTran)
-[![Coverity Scan](https://img.shields.io/coverity/scan/xxxx.svg)](https://scan.coverity.com/projects/aerisg222-njpegtran)
+[![Coverity Scan](https://img.shields.io/coverity/scan/14045.svg)](https://scan.coverity.com/projects/aerisg222-njpegtran)
 
 # NJpegTran
 
