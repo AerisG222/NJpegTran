@@ -24,7 +24,7 @@ namespace NJpegTran
 
             var args = Options.GetArguments(srcPath, null);
 
-            var result = await RunProcessAsync(args, null, srcPath, null);
+            var result = await RunProcessAsync(args, null, srcPath, null).ConfigureAwait(false);
 
             return result;
         }
@@ -36,7 +36,7 @@ namespace NJpegTran
 
             var args = Options.GetArguments(srcPath, dstPath);
 
-            var result = await RunProcessAsync(args, null, srcPath, dstPath);
+            var result = await RunProcessAsync(args, null, srcPath, dstPath).ConfigureAwait(false);
 
             return result;
         }
@@ -48,7 +48,7 @@ namespace NJpegTran
 
             var args = Options.GetArguments(null, null);
 
-            return await RunProcessAsync(args, inStream, null, null);
+            return await RunProcessAsync(args, inStream, null, null).ConfigureAwait(false);
         }
 
 
@@ -58,7 +58,7 @@ namespace NJpegTran
 
             var args = Options.GetArguments(null, dstPath);
 
-            return await RunProcessAsync(args, inStream, null, dstPath);
+            return await RunProcessAsync(args, inStream, null, dstPath).ConfigureAwait(false);
         }
 
 
@@ -94,7 +94,7 @@ namespace NJpegTran
                     }
                 }
 
-                await cmd.Task;
+                await cmd.Task.ConfigureAwait(false);
 
                 if(!cmd.Result.Success)
                 {
