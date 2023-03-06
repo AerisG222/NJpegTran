@@ -1,10 +1,9 @@
-namespace NJpegTran
+namespace NJpegTran;
+
+public enum Rotate
 {
-    public enum Rotate
-    {
-        NotSpecified = 0,
-        Rotate90DegreesClockwise,
-        Rotate180Degrees,
-        Rotate90DegreesCounterClockwise
-    }
+    NotSpecified = 0,
+    Rotate90DegreesClockwise,
+    Rotate180Degrees,
+    Rotate90DegreesCounterClockwise
 }

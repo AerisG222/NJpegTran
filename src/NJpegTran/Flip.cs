@@ -1,9 +1,8 @@
-namespace NJpegTran
+namespace NJpegTran;
+
+public enum Flip
 {
-    public enum Flip
-    {
-        NotSpecified = 0,
-        Horizontal,
-        Vertical
-    }
+    NotSpecified = 0,
+    Horizontal,
+    Vertical
 }

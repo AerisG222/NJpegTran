@@ -1,10 +1,9 @@
-namespace NJpegTran
+namespace NJpegTran;
+
+public enum Copy
 {
-    public enum Copy
-    {
-        NotSpecified = 0,
-        None,
-        Comments,
-        All
-    }
+    NotSpecified = 0,
+    None,
+    Comments,
+    All
 }
