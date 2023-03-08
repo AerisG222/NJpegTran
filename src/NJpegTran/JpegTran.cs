@@ -1,8 +1,9 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
-using Medallion.Shell;
 
 namespace NJpegTran;
 
@@ -15,13 +16,14 @@ public class JpegTran
         _options = opts ?? throw new ArgumentNullException(nameof(opts));
     }
 
-    public async Task<Result> RunAsync(string srcPath)
+    public async Task<Result> RunAsync(string srcPath, Stream dstStream)
     {
         ValidateSourceFile(srcPath);
+        ValidateDestinationStream(dstStream);
 
         var args = _options.GetArguments(srcPath, null);
 
-        var result = await RunProcessAsync(args, null, srcPath, null).ConfigureAwait(false);
+        var result = await RunProcessAsync(args, null, dstStream).ConfigureAwait(false);
 
         return result;
     }
@@ -32,88 +34,79 @@ public class JpegTran
 
         var args = _options.GetArguments(srcPath, dstPath);
 
-        var result = await RunProcessAsync(args, null, srcPath, dstPath).ConfigureAwait(false);
+        var result = await RunProcessAsync(args, null, null).ConfigureAwait(false);
 
         return result;
     }
 
-    public async Task<Result> RunAsync(Stream inStream)
+    public async Task<Result> RunAsync(Stream inStream, Stream dstStream)
     {
-        ValidateStream(inStream);
+        ValidateSourceStream(inStream);
+        ValidateDestinationStream(dstStream);
 
         var args = _options.GetArguments(null, null);
 
-        return await RunProcessAsync(args, inStream, null, null).ConfigureAwait(false);
+        return await RunProcessAsync(args, inStream, dstStream).ConfigureAwait(false);
     }
 
     public async Task<Result> RunAsync(Stream inStream, string dstPath)
     {
-        ValidateStream(inStream);
+        ValidateSourceStream(inStream);
 
         var args = _options.GetArguments(null, dstPath);
 
-        return await RunProcessAsync(args, inStream, null, dstPath).ConfigureAwait(false);
+        return await RunProcessAsync(args, inStream, null).ConfigureAwait(false);
     }
 
-    async Task<Result> RunProcessAsync(string[] args, Stream srcStream, string srcPath, string dstPath)
+    async Task<Result> RunProcessAsync(string[] args, Stream srcStream, Stream dstStream)
     {
-        Command cmd = null;
-        MemoryStream ms = null;
+        using var process = new Process();
+
+        process.StartInfo.FileName = _options.JpegTranPath;
+        process.StartInfo.CreateNoWindow = true;
+        process.StartInfo.UseShellExecute = false;
+        process.StartInfo.StandardInputEncoding = Console.InputEncoding;
+        process.StartInfo.StandardErrorEncoding = Console.OutputEncoding;
+        process.StartInfo.StandardOutputEncoding = Console.OutputEncoding;
+        process.StartInfo.RedirectStandardInput = true;
+        process.StartInfo.RedirectStandardError = true;
+        process.StartInfo.RedirectStandardOutput = true;
+
+        foreach(var arg in args)
+        {
+            process.StartInfo.ArgumentList.Add(arg);
+        }
 
         try
         {
-            if(srcStream == null)
+            var stdErr = new StringBuilder();
+            process.ErrorDataReceived += (sender, e) => stdErr.Append(e.Data);
+
+            process.Start();
+
+            if(srcStream != null)
             {
-                if(dstPath == null)
-                {
-                    ms = new MemoryStream();
-                    cmd = Command.Run(_options.JpegTranPath, args) > ms;
-                }
-                else
-                {
-                    cmd = Command.Run(_options.JpegTranPath, args);
-                }
-            }
-            else
-            {
-                if(dstPath == null)
-                {
-                    ms = new MemoryStream();
-                    cmd = Command.Run(_options.JpegTranPath, args) < srcStream > ms;
-                }
-                else
-                {
-                    cmd = Command.Run(_options.JpegTranPath, args) < srcStream;
-                }
+                await srcStream.CopyToAsync(process.StandardInput.BaseStream).ConfigureAwait(false);
+                await process.StandardInput.FlushAsync().ConfigureAwait(false);
+                process.StandardInput.Close();
             }
 
-            await cmd.Task.ConfigureAwait(false);
+            process.BeginErrorReadLine();
 
-            if(!cmd.Result.Success)
+            if(dstStream != null)
             {
-                return new Result {
-                    Success = false,
-                    ExitCode = cmd.Result.ExitCode
-                };
+                await process.StandardOutput.BaseStream.CopyToAsync(dstStream).ConfigureAwait(false);
+                await process.StandardOutput.BaseStream.FlushAsync().ConfigureAwait(false);
+                process.StandardOutput.Close();
             }
 
-            if(ms != null)
-            {
-                ms.Seek(0, SeekOrigin.Begin);
+            await process.WaitForExitAsync().ConfigureAwait(false);
 
-                return new Result {
-                    Success = true,
-                    ExitCode = cmd.Result.ExitCode,
-                    OutputStream = ms
-                };
-            }
-            else
-            {
-                return new Result {
-                    Success = true,
-                    ExitCode = cmd.Result.ExitCode
-                };
-            }
+            return new Result {
+                Success = process.ExitCode == 0,
+                ExitCode = process.ExitCode,
+                StdError = stdErr.ToString()
+            };
         }
         catch (Win32Exception ex)
         {
@@ -129,11 +122,29 @@ public class JpegTran
         }
     }
 
-    void ValidateStream(Stream inStream)
+    void ValidateSourceStream(Stream sourceStream)
     {
-        if(inStream == null)
+        if(sourceStream == null)
         {
-            throw new ArgumentNullException(nameof(inStream));
+            throw new ArgumentNullException(nameof(sourceStream));
+        }
+
+        if(!sourceStream.CanRead)
+        {
+            throw new InvalidOperationException("Unable to read from source stream!");
+        }
+    }
+
+    void ValidateDestinationStream(Stream dstStream)
+    {
+        if(dstStream == null)
+        {
+            throw new ArgumentNullException(nameof(dstStream));
+        }
+
+        if(!dstStream.CanWrite)
+        {
+            throw new InvalidOperationException("Unable to write to destination stream!");
         }
     }
 }

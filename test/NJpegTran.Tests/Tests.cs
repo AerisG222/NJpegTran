@@ -19,14 +19,12 @@ public class Tests
     public async void CanProcessFileToStream()
     {
         var jt = GetJpegTran();
-        var result = await jt.RunAsync("DSC_3982.jpg");
+        using var fs = new FileStream("t2.jpg", FileMode.Create);
+        var result = await jt.RunAsync("DSC_3982.jpg", fs);
 
         Assert.NotNull(result);
         Assert.True(result.Success);
-        Assert.NotNull(result.OutputStream);
 
-        var fs = new FileStream("t2.jpg", FileMode.Create);
-        await result.OutputStream.CopyToAsync(fs);
         await fs.FlushAsync();
         fs.Close();
     }
@@ -47,14 +45,13 @@ public class Tests
     {
         var jt = GetJpegTran();
         var fs = new FileStream("DSC_3982.jpg", FileMode.Open, FileAccess.Read);
-        var result = await jt.RunAsync(fs);
+        using var ofs = new FileStream("t4.jpg", FileMode.Create);
+
+        var result = await jt.RunAsync(fs, ofs);
 
         Assert.NotNull(result);
         Assert.True(result.Success);
-        Assert.NotNull(result.OutputStream);
 
-        var ofs = new FileStream("t4.jpg", FileMode.Create);
-        await result.OutputStream.CopyToAsync(ofs);
         await ofs.FlushAsync();
         ofs.Close();
     }
