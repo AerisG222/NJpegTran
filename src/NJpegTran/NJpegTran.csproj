@@ -2,7 +2,7 @@
     <PropertyGroup>
         <Description>.Net wrapper for jpegtran</Description>
         <AssemblyTitle>NJpegTran</AssemblyTitle>
-        <VersionPrefix>0.2.0</VersionPrefix>
+        <VersionPrefix>0.2.1</VersionPrefix>
         <Authors>Mike Morano &lt;mmorano@mikeandwan.us&gt;</Authors>
         <TargetFrameworks>net6.0</TargetFrameworks>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
