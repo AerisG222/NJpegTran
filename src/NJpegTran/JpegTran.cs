@@ -16,46 +16,42 @@ public class JpegTran
         _options = opts ?? throw new ArgumentNullException(nameof(opts));
     }
 
-    public async Task<Result> RunAsync(string srcPath, Stream dstStream)
+    public Task<Result> RunAsync(string srcPath, Stream dstStream)
     {
         ValidateSourceFile(srcPath);
         ValidateDestinationStream(dstStream);
 
         var args = _options.GetArguments(srcPath, null);
 
-        var result = await RunProcessAsync(args, null, dstStream).ConfigureAwait(false);
-
-        return result;
+        return RunProcessAsync(args, null, dstStream);
     }
 
-    public async Task<Result> RunAsync(string srcPath, string dstPath)
+    public Task<Result> RunAsync(string srcPath, string dstPath)
     {
         ValidateSourceFile(srcPath);
 
         var args = _options.GetArguments(srcPath, dstPath);
 
-        var result = await RunProcessAsync(args, null, null).ConfigureAwait(false);
-
-        return result;
+        return RunProcessAsync(args, null, null);
     }
 
-    public async Task<Result> RunAsync(Stream inStream, Stream dstStream)
+    public Task<Result> RunAsync(Stream inStream, Stream dstStream)
     {
         ValidateSourceStream(inStream);
         ValidateDestinationStream(dstStream);
 
         var args = _options.GetArguments(null, null);
 
-        return await RunProcessAsync(args, inStream, dstStream).ConfigureAwait(false);
+        return RunProcessAsync(args, inStream, dstStream);
     }
 
-    public async Task<Result> RunAsync(Stream inStream, string dstPath)
+    public Task<Result> RunAsync(Stream inStream, string dstPath)
     {
         ValidateSourceStream(inStream);
 
         var args = _options.GetArguments(null, dstPath);
 
-        return await RunProcessAsync(args, inStream, null).ConfigureAwait(false);
+        return RunProcessAsync(args, inStream, null);
     }
 
     async Task<Result> RunProcessAsync(string[] args, Stream srcStream, Stream dstStream)
