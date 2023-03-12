@@ -11,6 +11,6 @@
         <PackageId>NJpegTran</PackageId>
         <PackageTags>jpeg;jpegtran;optimize;minify;shrink</PackageTags>
         <PackageProjectUrl>https://github.com/AerisG222/NJpegTran</PackageProjectUrl>
-        <PackageLicenseUrl>https://github.com/AerisG222/NJpegTran/blob/master/LICENSE.md</PackageLicenseUrl>
+        <License>MIT</License>
     </PropertyGroup>
 </Project>
